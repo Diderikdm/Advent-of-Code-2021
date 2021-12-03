@@ -4,7 +4,7 @@ calc_bin = lambda lst: int(''.join([str(x) for x in lst]), 2)
 
 with open("2021 day3.txt", 'r') as file:
     data = file.read().splitlines()
-    gamma = [get_value(x, 1, 0) for x in get_vertical(data)]
+    gamma = [get_value(x, 0, 1) for x in get_vertical(data)]
     epsilon = [int(not(x)) for x in gamma]
     print(calc_bin(gamma) * calc_bin(epsilon)) 
     oxy = data[:]
