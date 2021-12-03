@@ -1,20 +1,19 @@
-def get_vertical(lst):
-    return [[y[x] for y in lst] for x in range(len(lst[0]))]
+get_vertical = lambda lst: [[y[x] for y in lst] for x in range(len(lst[0]))]
+get_value = lambda x, n, m: n if x.count('0') > x.count('1') else m
+calc_bin = lambda lst: int(''.join([str(x) for x in lst]), 2)
 
 with open("2021 day3.txt", 'r') as file:
     data = file.read().splitlines()
-    verticals = get_vertical(data)
-    gamma, epsilon, oxy, co2 = [], [], data[:], data[:]
-    for i,x in enumerate(verticals):
-        most = 0 if x.count('0') > x.count('1') else 1
-        gamma.append(most)
-        epsilon.append(int(not(most)))
+    gamma = [get_value(x, 1, 0) for x in get_vertical(data)]
+    epsilon = [int(not(x)) for x in gamma]
+    oxy = data[:]
+    co2 = data[:]
+    for i,j in enumerate(data[0]):
         if len(oxy) > 1:
-            current_oxy = get_vertical(oxy)
-            oxy = [x for x in oxy if int(x[i]) == (0 if current_oxy[i].count('0') > current_oxy[i].count('1') else 1)]
+            current_oxy = get_value(get_vertical(oxy)[i], 1, 0)
+            oxy = [x for x in oxy if int(x[i]) == current_oxy]
         if len(co2) > 1:
-            current_co2 = get_vertical(co2)
-            co2 = [x for x in co2 if int(x[i]) == (1 if current_co2[i].count('0') > current_co2[i].count('1') else 0)]    
-    print(int(''.join([str(x) for x in gamma]), 2) * int(''.join([str(x) for x in epsilon]), 2))
-    print(int(''.join([str(x) for x in oxy]), 2) * int(''.join([str(x) for x in co2]), 2))
-   
+            current_co2 = get_value(get_vertical(co2)[i], 0, 1)
+            co2 = [x for x in co2 if int(x[i]) == current_co2]
+    print(calc_bin(gamma) * calc_bin(epsilon))  
+    print(calc_bin(oxy) * calc_bin(co2))
