@@ -11,9 +11,9 @@ with open("2021 day3.txt", 'r') as file:
     co2 = data[:]
     for i,j in enumerate(data[0]):
         if len(oxy) > 1:
-            current_oxy = get_value(get_vertical(oxy)[i], 1, 0)
+            current_oxy = get_value(get_vertical(oxy)[i], 0, 1)
             oxy = [x for x in oxy if int(x[i]) == current_oxy]
         if len(co2) > 1:
-            current_co2 = get_value(get_vertical(co2)[i], 0, 1)
+            current_co2 = get_value(get_vertical(co2)[i], 1, 0)
             co2 = [x for x in co2 if int(x[i]) == current_co2] 
     print(calc_bin(oxy) * calc_bin(co2))
