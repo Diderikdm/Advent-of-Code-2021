@@ -18,13 +18,12 @@ with open("2021 day4.txt", 'r') as file:
         number = numbers.pop(0)
         play = tuple(sorted([x for x in play] + [number]))
         found_rows = [row for row in all_rows if all(x in play for x in row) and row not in used_rows]
-        if found_rows:
-            for row in found_rows:
-                for key, board in boards.items():
-                    if row in board and key not in used_boards:
-                        used_boards.append(key)
-                        used_rows.append(row)
-                        board_values.append(sum(set(get_unmarked(board))) * number)
+        for row in found_rows:
+            for key, board in boards.items():
+                if row in board and key not in used_boards:
+                    used_boards.append(key)
+                    used_rows.append(row)
+                    board_values.append(sum(set(get_unmarked(board))) * number)
                         
     print(board_values[0])
     print(board_values[-1])
