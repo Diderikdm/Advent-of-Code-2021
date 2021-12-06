@@ -6,7 +6,7 @@ def calc(begin, end, data):
         temp[6] = temp[8] = data[0]
         for y in range(1, 9):
             temp[y - 1] += data[y]  
-        data = {k:v for k,v in temp.items()}
+        data = temp
     return data
 
 with open("2021 day6.txt", 'r') as file:
