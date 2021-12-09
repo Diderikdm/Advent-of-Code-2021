@@ -6,7 +6,6 @@ def find_basin(key, current):
             prev.add(k)
             current = find_basin(k, current + [k])
     return current
-
             
 with open("2021 day9.txt", 'r') as file:
     data = [[int(y) for y in x] for x in file.read().splitlines()]
