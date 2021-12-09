@@ -2,7 +2,8 @@ from functools import reduce
 
 def find_basin(key, current):
     for k in adj(*key):
-        if k not in current and grid[k] != 9:
+        if k not in prev and grid[k] != 9:
+            prev.add(k)
             current = find_basin(k, current + [k])
     return current
 
@@ -16,8 +17,6 @@ with open("2021 day9.txt", 'r') as file:
     basins = []
     for k,v in grid.items():
         if k not in prev and v != 9:
-            basin = find_basin(k, [k])
-            basins.append(len(basin))
-            for x in basin:
-                prev.add(x)
+            prev.add(k)
+            basins.append(len(find_basin(k, [k])))
     print(reduce((lambda x, y: x * y), sorted(basins, key = lambda x: -x)[:3]))
