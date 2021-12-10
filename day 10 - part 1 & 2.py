@@ -6,11 +6,9 @@ def find_syntax(row, score=0):
                     row = row[:i-1] + row[i+1:]
                     continue
                 return scores[row[i]][0]
-
         for x in row[::-1]:
             score = score * 5 + scores[syntax[x]][1]
         p2_scores.append(score)
-
         return 0
 
 with open("2021 day10.txt", 'r') as file:
