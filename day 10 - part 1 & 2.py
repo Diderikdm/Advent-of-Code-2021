@@ -1,11 +1,11 @@
 def find_syntax(row, score=0):
     while row:
         i = next((e for e, x in enumerate(row) if x in scores), None)
-            if i:
-                if syntax[row[i-1]] == row[i]:
-                    row = row[:i-1] + row[i+1:]
-                    continue
-                return scores[row[i]][0]
+        if i:
+            if syntax[row[i-1]] == row[i]:
+                row = row[:i-1] + row[i+1:]
+                continue
+            return scores[row[i]][0]
         for x in row[::-1]:
             score = score * 5 + scores[syntax[x]][1]
         p2_scores.append(score)
