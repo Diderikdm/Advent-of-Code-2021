@@ -17,7 +17,8 @@ with open("2021 day11.txt", 'r') as file:
                         grid[other] += 1
         flashed += len(prev)
         grid.update({k : 0 for k in prev})
-        if i == 99:
-            print(flashed)
         i += 1
+        if i == 100:
+            print(flashed)
     print(i)
+        
