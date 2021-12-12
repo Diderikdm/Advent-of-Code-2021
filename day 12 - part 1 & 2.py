@@ -5,8 +5,8 @@ def find_routes(current, path, p2=False):
         routes.add(tuple(path))
         return
     for x in data[current]:
-        if (x.islower() and x in path and not p2) \
-        or (x.islower() and x in path and any(path.count(y) > 1 for y in path if y.islower()) and p2 or x == 'start'):
+        if (x == 'start' or x.islower() and x in path and not p2) \
+        or (x == 'start' or x.islower() and x in path and any(path.count(y) > 1 for y in path if y.islower()) and p2):
             continue
         find_routes(x, path + [x], p2)
     return len(routes)
