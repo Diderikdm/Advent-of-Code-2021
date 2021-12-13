@@ -1,3 +1,4 @@
+with open("2021 day13.txt", 'r') as file:     
     data, folds = [x.splitlines() for x in file.read().split('\n\n')]
     grid = {tuple(int(z) for z in y.split(',')) : '#' for y in data}
     for e, instruction in enumerate(folds):
