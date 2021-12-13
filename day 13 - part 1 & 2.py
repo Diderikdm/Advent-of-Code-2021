@@ -2,7 +2,7 @@ with open("2021 day13.txt", 'r') as file:
     data, folds = [x.splitlines() for x in file.read().split('\n\n')]
     grid = {tuple(int(z) for z in y.split(',')) : '#' for y in data}
     for e, instruction in enumerate(folds):
-        inst = int(instruction.split()[-1].split('=')[-1])
+        inst = int(instruction.split('=')[-1])
         if 'x' in instruction: 
             to_fold = [(x,y) for x,y in grid if x > inst]
         else:
