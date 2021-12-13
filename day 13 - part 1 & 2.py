@@ -4,10 +4,10 @@ with open("2021 day13.txt", 'r') as file:
     for e, instruction in enumerate(folds):
         inst = int(instruction.split()[-1].split('=')[-1])
         if 'x' in instruction: 
-            to_fold = [x for x in grid if x[0] > inst]
+            to_fold = [(x,y) for x,y in grid if x > inst]
         else:
-            to_fold = [x for x in grid if x[1] > inst]
-        for x, y in to_fold:
+            to_fold = [(x,y) for x,y in grid if y > inst]
+        for x,y in to_fold:
             if 'x' in instruction: 
                 grid[(inst + (inst - x), y)] = grid.pop((x,y))
             else:
