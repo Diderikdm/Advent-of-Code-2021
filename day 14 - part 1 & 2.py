@@ -12,11 +12,9 @@ with open("2021 day14.txt", 'r') as file:
                 new_amt[x] += v
         amt_inst = new_amt
         if i in [9,39]:
-            chars = defaultdict(int)
+            chars = defaultdict(int, {start : 1, end : 1})
             for k,v in amt_inst.items():
                 for char in [chr(x) for x in range(65,91)]:
                     chars[char] += k.count(char) * v
-            chars[start] += 1
-            chars[end] += 1
             sort = sorted([v // 2 for v in chars.values() if v])
             print(sort[-1] - sort[0])
