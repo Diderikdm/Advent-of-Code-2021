@@ -16,5 +16,5 @@ with open("2021 day14.txt", 'r') as file:
             for k,v in amt_inst.items():
                 for char in [chr(x) for x in range(65,91)]:
                     chars[char] += k.count(char) * v
-            sort = sorted([v // 2 for v in chars.values() if v])
-            print(sort[-1] - sort[0])
+            vals = [v // 2 for v in chars.values() if v]
+            print(max(vals) - min(vals))
