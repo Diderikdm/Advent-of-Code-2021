@@ -14,7 +14,7 @@ with open("2021 day14.txt", 'r') as file:
         if i in [9,39]:
             chars = defaultdict(int, {start : 1, end : 1})
             for k,v in amt_inst.items():
-                for char in set(''.join(amt_inst.keys())):
+                for char in set(k):
                     chars[char] += k.count(char) * v
             vals = [v // 2 for v in chars.values() if v]
             print(max(vals) - min(vals))
