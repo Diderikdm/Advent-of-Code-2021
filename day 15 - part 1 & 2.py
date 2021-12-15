@@ -15,7 +15,6 @@ with open("2021 day15.txt", 'r') as file:
     data = [[int(x) for x in y] for y in file.read().splitlines()]
     grid = {(x,y) : data[y][x] for x in range(len(data[0])) for y in range(len(data))}
     print(find_route((0,0), (len(data[0]) - 1, len(data) - 1), 0, {}))
-    new_coords = {}
     for z in [lambda: (x + i * len(data[0]), y), lambda: (x, y + i * len(data))]:
         new_coords = {}
         for x,y in grid:
