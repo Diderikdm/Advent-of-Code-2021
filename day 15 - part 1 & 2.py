@@ -18,6 +18,6 @@ with open("2021 day15.txt", 'r') as file:
         new_coords = {}
         for x,y in grid:
             for i in range(1,5):
-                new_coords[z()] = (grid[(x,y)] + i) % 10 + 1 if (grid[(x,y)] + i) > 9 else (grid[(x,y)] + i)
+                new_coords[z()] = (grid[(x,y)] + i - 1) % 9 + 1
         grid.update(new_coords)
     print(find_route((0,0), (len(data[0]) * 5 - 1, len(data) * 5 - 1), 0, {}))
