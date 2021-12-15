@@ -1,8 +1,8 @@
 def find_route(start, target, steps, best):
     q = [(steps, start[0], start[1])]
     while q:
-        q = sorted(q)
-        steps, x, y = q.pop(0)
+        steps, x, y = min(q)
+        q.remove((steps, x, y))
         if (x,y) in best and best[(x,y)] <= steps:
             continue
         best[(x,y)] = min(best[(x,y)] if (x,y) in best else steps, steps)
