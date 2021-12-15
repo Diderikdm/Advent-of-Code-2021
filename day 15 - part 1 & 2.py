@@ -1,15 +1,14 @@
 def find_route(start, target, steps, best):
     q = [(steps, start[0], start[1])]
     while q:
+        q = [(steps,x,y) for steps,x,y in q if (x,y) not in best or best[(x,y)] > steps]
         steps, x, y = min(q)
         q.remove((steps, x, y))
-        if (x,y) in best and best[(x,y)] <= steps:
-            continue
-        best[(x,y)] = min(best[(x,y)] if (x,y) in best else steps, steps)
+        best[(x,y)] = steps
         if (x,y) == target:
             return best[(x,y)]
         for a, b in [coord for coord in ((x,y+1), (x-1,y), (x+1,y), (x,y-1)) if coord in grid]:
-            q.append((steps + grid[(a,b)], a, b))              
+            q.append((steps + grid[(a,b)], a, b))             
 
 with open("2021 day15.txt", 'r') as file:
     data = [[int(x) for x in y] for y in file.read().splitlines()]
