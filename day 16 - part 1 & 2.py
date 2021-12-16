@@ -19,11 +19,11 @@ def parse_bin(string, values, val = '', op = True):
             string, v = parse_bin(string, [])
             values += v
     return string, [types[t](values)]
-    
+
 with open("2021 day16.txt", 'r') as file:
     raw = file.read()
     data = bin(int(raw, 16))[2:].zfill(len(raw) * 4)
-    versions, values, outer_type = [], [], int(data[3:6], 2)
+    versions, values = [], []
     lengths = {'0': lambda x: int(x[1:16], 2), '1': lambda x: int(x[1:12], 2)}
     types = {0:lambda values:sum(values),
              1:lambda values:reduce(lambda x,y: x*y, values),
