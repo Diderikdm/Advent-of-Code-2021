@@ -1,6 +1,6 @@
 from functools import reduce
 
-def parse_bin(string, values, val = '', op = True):
+def parse_bin(string, values, val = '', op = None):
     v, t, string = int(string[:3], 2), int(string[3:6], 2), string[6:]
     versions.append(v)
     if t == 4:
