@@ -6,7 +6,7 @@ def parse_bin(string, values, origin, val = '', op = None):
     if t == 4:
         while op != '0':
             op, val, string = string[0], val + string[1:5], string[5:]
-        return string, origin + values + [int(val, 2)]
+        return string, origin + [int(val, 2)]
     length = lengths[string[0]](string)
     if string[0] == '0':
         copy, string = string[16 : 16 + length], string[16 + length:]
