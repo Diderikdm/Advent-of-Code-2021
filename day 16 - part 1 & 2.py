@@ -18,8 +18,7 @@ def parse_bin(string, values, origin, versions, val = '', op = None):
     return string, origin + [types[t](*values)], versions + [v]
 
 with open("2021 day16.txt", 'r') as file:
-    raw = file.read()
-    data = bin(int(raw, 16))[2:].zfill(len(raw) * 4)
+    data = [bin(int(raw, 16))[2:].zfill(len(raw) * 4) for raw in [file.read()]][0]
     lengths = {'0': lambda x: int(x[1:16], 2), '1': lambda x: int(x[1:12], 2)}
     types = {0:lambda *v:sum(v), 1:lambda *v:prod(v), 2:lambda *v:min(v), 3:lambda *v:max(v), 5:lambda x,y:int(x>y), 6:lambda x,y:int(x<y), 7:lambda x,y:int(x==y)}
     data, values, versions = parse_bin(data, [], [], [])
