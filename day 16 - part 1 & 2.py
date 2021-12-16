@@ -6,13 +6,12 @@ def parse_bin(string, versions, values, origin, val = '', op = None):
         while op != '0':
             op, val, string = string[0], val + string[1:5], string[5:]
         return string, versions + [v], origin + [int(val, 2)]
-    length = lengths[string[0]](string)
     if string[0] == '0':
-        copy, string = string[16 : 16 + length], string[16 + length:]
+        copy, string = string[16 : 16 + lengths[string[0]](string)], string[16 + lengths[string[0]](string):]
         while len(copy) > 5:
             copy, versions, values = parse_bin(copy, versions, [], values)
     else:
-        string = string[12:]
+        string, length = string[12:], lengths[string[0]](string)
         for e in range(length):
             string, versions, values = parse_bin(string, versions, [], values)
     return string, versions + [v], origin + [types[t](*values)]
