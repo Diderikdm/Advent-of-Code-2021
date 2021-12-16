@@ -1,36 +1,24 @@
 from functools import reduce
 
-def append(v, lst):
-    if type(v) == list:
-        for x in v:
-            lst.append(x)
-    else:
-        lst.append(v)
-        
-def parse_bin(string, values, val = '', i = 0):
+def parse_bin(string, values, val = '', op = True):
     v, t, string = int(string[:3], 2), int(string[3:6], 2), string[6:]
     versions.append(v)
     if t == 4:
-        while True:
-            op, i = string[0], i + 5
-            val += string[1:5]
-            string = string[5:]
-            if op == '0':
-                return string, values + [int(val, 2)]
+        while op != '0':
+            op, val, string = string[0], val + string[1:5], string[5:]
+        return string, values + [int(val, 2)]
+    length = lengths[string[0]](string)
+    if string[0] == '0':
+        copy, string = string[16 : 16 + length], string[16 + length:]
+        while len(copy) > 5:
+            copy, v = parse_bin(copy, [])
+            values += v
     else:
-        length = lengths[string[0]](string)
-        if string[0] == '0':
-            copy = string[16 : 16 + length]
-            while len(copy) > 5:
-                copy, v = parse_bin(copy, [])
-                append(v, values)
-            string = string[16 + length:]
-        else:
-            string = string[12:]
-            for e in range(length):
-                string, v = parse_bin(string, [])
-                append(v, values)
-    return string, types[t](values)
+        string = string[12:]
+        for e in range(length):
+            string, v = parse_bin(string, [])
+            values += v
+    return string, [types[t](values)]
     
 with open("2021 day16.txt", 'r') as file:
     raw = file.read()
@@ -47,4 +35,4 @@ with open("2021 day16.txt", 'r') as file:
     while len(data) > 11:
         data, values = parse_bin(data, [])
     print(sum(versions))
-    print(values)
+    print(values[0])
