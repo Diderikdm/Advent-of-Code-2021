@@ -25,13 +25,7 @@ with open("2021 day16.txt", 'r') as file:
     data = bin(int(raw, 16))[2:].zfill(len(raw) * 4)
     versions, values = [], []
     lengths = {'0': lambda x: int(x[1:16], 2), '1': lambda x: int(x[1:12], 2)}
-    types = {0:lambda values:sum(values),
-             1:lambda values:prod(values),
-             2:lambda values:min(values),
-             3:lambda values:max(values),
-             5:lambda values:int(values[0] > values[1]),
-             6:lambda values:int(values[0] < values[1]),
-             7:lambda values:int(values[0] == values[1])}
+    types = types = {0:lambda *v:sum(v), 1:lambda *v:prod(v), 2:lambda *v:min(v), 3:lambda *v:max(v), 5:lambda x,y:int(x>y), 6:lambda x,y:int(x<y), 7:lambda x,y:int(x==y)}
     while len(data) > 11:
         data, values = parse_bin(data, [])
     print(sum(versions))
