@@ -18,7 +18,7 @@ def parse_bin(string, values, val = '', op = None):
         for e in range(length):
             string, v = parse_bin(string, [])
             values += v
-    return string, [types[t](values)]
+    return string, [types[t](*values)]
 
 with open("2021 day16.txt", 'r') as file:
     raw = file.read()
