@@ -2,11 +2,10 @@ from math import prod
 
 def parse_bin(string, values, origin, versions, val = '', op = None):
     v, t, string = int(string[:3], 2), int(string[3:6], 2), string[6:]
-    versions.append(v)
     if t == 4:
         while op != '0':
             op, val, string = string[0], val + string[1:5], string[5:]
-        return string, origin + [int(val, 2)], versions
+        return string, origin + [int(val, 2)], versions + [v]
     length = lengths[string[0]](string)
     if string[0] == '0':
         copy, string = string[16 : 16 + length], string[16 + length:]
@@ -16,7 +15,7 @@ def parse_bin(string, values, origin, versions, val = '', op = None):
         string = string[12:]
         for e in range(length):
             string, values, versions = parse_bin(string, [], values, versions)
-    return string, origin + [types[t](*values)], versions
+    return string, origin + [types[t](*values)], versions + [v]
 
 with open("2021 day16.txt", 'r') as file:
     raw = file.read()
