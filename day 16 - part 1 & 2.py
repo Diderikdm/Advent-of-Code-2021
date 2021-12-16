@@ -1,4 +1,4 @@
-from functools import reduce
+from math import prod
 
 def parse_bin(string, values, val = '', op = None):
     v, t, string = int(string[:3], 2), int(string[3:6], 2), string[6:]
@@ -26,7 +26,7 @@ with open("2021 day16.txt", 'r') as file:
     versions, values = [], []
     lengths = {'0': lambda x: int(x[1:16], 2), '1': lambda x: int(x[1:12], 2)}
     types = {0:lambda values:sum(values),
-             1:lambda values:reduce(lambda x,y: x*y, values),
+             1:lambda values:prod(values),
              2:lambda values:min(values),
              3:lambda values:max(values),
              5:lambda values:int(values[0] > values[1]),
