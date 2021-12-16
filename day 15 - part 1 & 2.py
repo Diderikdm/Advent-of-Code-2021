@@ -1,23 +1,25 @@
-def find_route(start, target, steps, best):
-    q = [(steps, start[0], start[1])]
-    while q:
-        q = [(steps,x,y) for steps,x,y in q if (x,y) not in best or best[(x,y)] > steps]
-        steps, x, y = min(q)
-        q.remove((steps, x, y))
-        best[(x,y)] = steps
-        if (x,y) == target:
-            return best[(x,y)]
-        for a, b in [coord for coord in ((x,y+1), (x-1,y), (x+1,y), (x,y-1)) if coord in grid]:
-            q.append((steps + grid[(a,b)], a, b))             
+from math import prod
 
-with open("2021 day15.txt", 'r') as file:
-    data = [[int(x) for x in y] for y in file.read().splitlines()]
-    grid = {(x,y) : data[y][x] for x in range(len(data[0])) for y in range(len(data))}
-    print(find_route((0,0), (len(data[0]) - 1, len(data) - 1), 0, {}))
-    for z in [lambda: (x + i * len(data[0]), y), lambda: (x, y + i * len(data))]:
-        new_coords = {}
-        for x,y in grid:
-            for i in range(1,5):
-                new_coords[z()] = (grid[(x,y)] + i - 1) % 9 + 1
-        grid.update(new_coords)
-    print(find_route((0,0), (len(data[0]) * 5 - 1, len(data) * 5 - 1), 0, {}))
+def parse_bin(string, versions, values, origin, val = '', op = None):
+    v, t, string = int(string[:3], 2), int(string[3:6], 2), string[6:]
+    if t == 4:
+        while op != '0':
+            op, val, string = string[0], val + string[1:5], string[5:]
+        return string, versions + [v], origin + [int(val, 2)]
+    if string[0] == '0' and (length := lengths[string[0]](string)):
+        copy, string = string[16 : 16 + length], string[16 + length:]
+        while len(copy) > 5:
+            copy, versions, values = parse_bin(copy, versions, [], values)
+    else:
+        string, length = string[12:], lengths[string[0]](string)
+        for e in range(length):
+            string, versions, values = parse_bin(string, versions, [], values)
+    return string, versions + [v], origin + [types[t](*values)]
+
+with open("2021 day16.txt", 'r') as file:
+    data = [bin(int(raw, 16))[2:].zfill(len(raw) * 4) for raw in [file.read()]][0]
+    lengths = {'0': lambda x: int(x[1:16], 2), '1': lambda x: int(x[1:12], 2)}
+    types = {0:lambda *v:sum(v), 1:lambda *v:prod(v), 2:lambda *v:min(v), 3:lambda *v:max(v), 5:lambda x,y:int(x>y), 6:lambda x,y:int(x<y), 7:lambda x,y:int(x==y)}
+    data, versions, values = parse_bin(data, [], [], [])
+    print(sum(versions))
+    print(values[0])
