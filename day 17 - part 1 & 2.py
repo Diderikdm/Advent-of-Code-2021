@@ -2,7 +2,7 @@ with open("2021 day17.txt", 'r') as file:
     minx, maxx, miny, maxy = sum([[int(y) for y in x.split('=')[1].split('..')] for x in file.read().split(', ')], [])
     count, best = 0, 0
     for tx in range(1, maxx + 1):
-        for ty in range(miny, -maxy + maxx):
+        for ty in range(miny, -maxy + (maxy - miny)):
             x, y, h = 0, 0, 0
             vx, vy = tx, ty
             while vx > 0 or y > miny:
