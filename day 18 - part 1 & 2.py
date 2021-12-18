@@ -19,7 +19,7 @@ def explode(row, i=0, nest=0, success=False):
                     temp.append(i - enum)
                     enum += 1
                 row = row[:min(temp)] + str(int(row[min(temp) : max(temp) + 1]) + left) + row[max(temp) + 1:]
-            nest -= 1
+            i, nest = -1, 0
             success = True
         i += 1
     return success, row
