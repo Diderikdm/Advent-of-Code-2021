@@ -31,6 +31,13 @@ def split_number(row, success = False):
         success = True
     return success, row
 
+def solve(row, success = True):
+    while success:
+        while success:
+            success, row = explode(row)
+        success, row = split_number(row)
+    return row
+
 def magnitude(row):
     while '[' in row:
         i = 0
@@ -42,13 +49,6 @@ def magnitude(row):
                     break
             i += 1
     return int(row)
-
-def solve(row, success = True):
-    while success:
-        while success:
-            success, row = explode(row)
-        success, row = split_number(row)
-    return row
 
 with open("2021 day18.txt", 'r') as file:
     data = file.read().splitlines()
