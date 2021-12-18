@@ -43,7 +43,6 @@ def magnitude(row):
             i += 1
     return int(row)
     
-
 def solve(row, success = True):
     while success:
         while success:
