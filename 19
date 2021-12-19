@@ -1,0 +1,50 @@
+from collections import defaultdict
+from itertools import combinations
+
+
+
+def compare_beacons_of_scanners(current):
+    matching = defaultdict(list)
+    for ok, ov in grid_distances.items():
+        for c,d in ov.items():
+            for k,v in current.items():
+                for a,b in v.items():
+                    if d == b:
+                        matching[ok] = [k, a]
+                        matching[c] = [k, a]
+    if len(matching) >= 12:
+        sort = sorted(matching.keys())
+        diff_coords = [tuple(sort[0][e] - sort[i+1][e] for e in range(3)) for i,x in enumerate(sort[1:])]
+        for start in matching[sort[0]]:
+            for nxt in sort[1:]:
+                for poss in matching[nxt]:
+                    orn = orientations(*poss)
+                    for e,x in enumerate(orn):
+                        
+        
+        
+
+def get_relative_beacon_distance(beacons, relatives):
+    for e, coords in enumerate(beacons):
+        for other_coords in beacons[e+1:]:
+            distance = sum([(coords[e] - other_coords[e]) ** 2 for e in range(3)])
+            relatives[coords][other_coords] = distance
+            relatives[other_coords][coords] = distance
+    return relatives
+
+with open("2021 day19.txt", 'r') as file:
+    data = {e: [tuple(int(z) for z in y.split(',')) for y in x.splitlines()[1:]] for e,x in enumerate(file.read().split('\n\n'))}
+    distances = {scanner : get_relative_beacon_distance(beacons, defaultdict(dict)) for scanner, beacons in data.items()}
+    orientations = lambda x,y,z: sum([[(x*a,y*b,z*c), (y*a,x*b,z*c), (z*a,y*b,x*c)] for a,b,c in set(combinations([-1,1] * 3, 3))], [])
+    mapped, grid, grid_distances, scanners = [0], [data[0][:]], distances[0], []
+    while len(mapped) < len(data):
+        for k,v in distances.items():
+            if k not in mapped:
+                compare_beacons_of_scanners(v)
+        
+
+
+
+###########
+#Gebruik scanner 0 om al die punten op te slaan in een grid, daarna de overlappende van de volgende 12+ scanner (al gespiegelde) coordinaten negeren en de nieuwe coordinaten toevoegen aan deze grid.
+#Blijven itereren op de scanners tot alle punten zijn gevonden.
