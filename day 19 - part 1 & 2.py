@@ -13,11 +13,15 @@ def turn_current_and_append_to_grid(current):
                     matches[k] = ok
         if len(matches) >= 12:
             xyz_diff = next((tuple(v[i] - k[i] for i in range(3)) for k,v in matches.items()))
+            current_grid = set()
             for k in current_orientation:
-               grid.add(tuple(k[i] + xyz_diff[i] for i in range(3)))
+                new_coord = tuple(k[i] + xyz_diff[i] for i in range(3))
+                grid.add(new_coord)
+                current_grid.add(new_coord)
             point = next((k for k,v in matches.items()))
             scanners.append(tuple(matches[point][i] - point[i] for i in range(3)))
-            return True
+            return True, current_grid
+    return False, None
                     
 def get_relative_beacon_distance(beacons, relative_distances, relative_xyz_shift):
     for coords in beacons:
@@ -35,16 +39,21 @@ with open("2021 day19.txt", 'r') as file:
     mapped = [0]
     scanners = [(0,0,0)]
     grid = set(data.pop(0))
-    grid_distances, grid_xyz_shifts = get_relative_beacon_distance(grid, defaultdict(list), defaultdict(list))
+    distance_and_xyz = [get_relative_beacon_distance(grid, defaultdict(list), defaultdict(list))]
     while data:
         for key, current in data.items():
             current_distances, current_xyz_shifts = get_relative_beacon_distance(current, defaultdict(list), defaultdict(list))
-            if any(any(len([distance for distance in current_distance if distance in grid_distance]) >= 11 for grid_distance in grid_distances.values()) for current_distance in current_distances.values()):
-                success = turn_current_and_append_to_grid(current)
-                if success:
-                    mapped.append(key)
-                    grid_distances, grid_xyz_shifts = get_relative_beacon_distance(grid, defaultdict(list), defaultdict(list))
-                    data.pop(key)
-                    break
-    print(len(grid))
+            for grid_distances, grid_xyz_shifts in distance_and_xyz:
+                if any(any(len([distance for distance in current_distance if distance in grid_distance]) >= 11 for grid_distance in grid_distances.values()) for current_distance in current_distances.values()):
+                    success, temp_grid = turn_current_and_append_to_grid(current)
+                    if success:
+                        mapped.append(key)
+                        data.pop(key)
+                        grid_distances, grid_xyz_shifts = get_relative_beacon_distance(temp_grid, defaultdict(list), defaultdict(list))
+                        distance_and_xyz.append((grid_distances, grid_xyz_shifts))
+                        break
+            else:
+                continue
+            break
     print(max(sum([abs(x[i] - y[i]) for i in range(3)]) for x in scanners for y in scanners))
+    print(datetime.now()-now)
