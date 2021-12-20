@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import combinations
 
 def turn_current_and_append_to_grid(current):
     orientations = [possibles(*x) for x in current]
