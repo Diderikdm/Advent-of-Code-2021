@@ -1,7 +1,6 @@
-def play_dirac_by_swap(current_player, other_player, current_score = 0, other_score = 0):
+def play_dirac_by_swap(current_player, other_player, current_score = 0, other_score = 0, wins_current = 0, wins_other = 0):
     if other_score >= 21:
         return 0, 1
-    wins_current, wins_other = 0, 0
     for turn, times in odds_of_rolling_results:
         current_position = (current_player + turn - 1) % 10 + 1
         loss, win = play_dirac_by_swap(other_player, current_position, other_score, current_score + current_position)
