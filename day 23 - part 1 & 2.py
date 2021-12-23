@@ -1,16 +1,5 @@
 from collections import deque
 
-def __print(grid):
-    t = ''
-    for y in range(1, max(x[1] for x in grid.keys()) + 1):
-        for x in range(1, max(x[0] for x in grid.keys())+ 1):
-            if (x,y) in grid:
-                t += grid[x,y]
-            else:
-                t += '#'
-        t += '\n'
-    print(t)
-
 def find_path(start, value, current_grid, goals, total):
     q = deque([[(start[0], start[1], total)]])
     prev = set([start])
