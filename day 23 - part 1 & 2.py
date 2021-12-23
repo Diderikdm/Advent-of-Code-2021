@@ -34,7 +34,7 @@ def find_route(grid, total):
     if not any(v.isalpha() for v in grid.values()):
         bests.append(total)
         return
-    for k,v in grid.items():
+    for k,v in sorted(grid.items(), key=lambda x: x[0] not in [5,7]):
         if v.isalpha() and ((k[0],k[1]-1) not in grid or grid[k[0],k[1]-1] == '.'):
             goals = []
             valid_grid = {(x,1) : grid[x,1] for x in range(min(vald), max(vald) + 1)}
@@ -46,14 +46,14 @@ def find_route(grid, total):
                 goals += [(x,1) for x in vald]
                 valid_grid.update({(k[0], y) : grid[k[0],y] for y in range(1, k[1] + 1)})
             possibles = find_path(k, v, valid_grid, goals, total)
-            for trial, steps in possibles.items():
+            for trial, steps in sorted(possibles.items(), key=lambda x: x[0][1] < 2):
                 trial_grid = {kn : kv for kn,kv in grid.items()}
                 if column and trial == max(column):
                     trial_grid.pop(trial)
                 else:
                     trial_grid[trial] = v
                 trial_grid[k] = '.'
-                find_route({ka:va for ka,va in trial_grid.items()}, steps)       
+                find_route({ka:va for ka,va in trial_grid.items()}, steps)     
                 
 with open("2021 day23.txt", 'r') as file:
     data = file.read().splitlines()
