@@ -12,6 +12,6 @@ with open("2021 day24.txt", 'r') as file:
             if not delta >= 0:
                 a, b, delta = b, a, -delta
             mx[a], mx[b] = 9, 9 - delta
-            mn[a], mn[b] = 1, 1 + delta
+            mn[b], mn[a] = 1, 1 + delta
     print(''.join([str(x) for x in mx]))
-    print(''.join([str(x) for x in mn[::-1]]))
+    print(''.join([str(x) for x in mn]))
