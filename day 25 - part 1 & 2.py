@@ -4,11 +4,11 @@ with open("2021 day25.txt", 'r') as file:
     e, moved = 0, True
     while moved:
         moved = set()
-        for cucumber in [x for x in filter(lambda a: grid[a] == '>' and grid[((a[0] + 1) % len(data[0]), a[1])] == '.', grid)]:
+        for cucumber in [a for a in grid if grid[a] == '>' and grid[((a[0] + 1) % len(data[0]), a[1])] == '.']:
             grid[((cucumber[0] + 1) % len(data[0]), cucumber[1])] = grid[cucumber]
             grid[cucumber] = '.'
             moved.add(((cucumber[0] + 1) % len(data[0]), cucumber[1]))
-        for cucumber in [x for x in filter(lambda a: grid[a] == 'v' and grid[(a[0], (a[1] + 1) % len(data))] == '.', grid)]:
+        for cucumber in [a for a in grid if grid[a] == 'v' and grid[(a[0], (a[1] + 1) % len(data))] == '.']:
             grid[(cucumber[0], (cucumber[1] + 1) % len(data))] = grid[cucumber]
             grid[cucumber] = '.'
             moved.add((cucumber[0], (cucumber[1] + 1) % len(data)))
