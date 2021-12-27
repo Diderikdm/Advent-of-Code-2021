@@ -55,4 +55,5 @@ with open("2021 day19.txt", 'r') as file:
             else:
                 continue
             break
+    print(len(grid))
     print(max(sum([abs(x[i] - y[i]) for i in range(3)]) for x in scanners for y in scanners))
