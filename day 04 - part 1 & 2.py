@@ -4,7 +4,7 @@ with open("2021 day4.txt", 'r') as file:
     boards, play, rows, found_numbers, board_values, used_rows, used_boards = {}, [], [], [], [], [], [] 
     get_vertical = lambda board: [[y[x] for y in board] for x in range(len(board[0]))]
     get_unmarked = lambda board: [x for x in sum([list(y) for y in board], []) if x not in play]
-    for e,x in enumerate(data[1:])
+    for e,x in enumerate(data[1:]):
         board = [[int(y) for y in row.split()] for row in x.splitlines()]
         vert_board = get_vertical(board)
         boards[e] = [tuple(sorted(x)) for x in board + vert_board]
