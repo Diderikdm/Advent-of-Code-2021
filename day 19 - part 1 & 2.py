@@ -44,7 +44,7 @@ with open("2021 day19.txt", 'r') as file:
         for key, current in data.items():
             current_distances, current_xyz_shifts = get_relative_beacon_distance(current, defaultdict(list), defaultdict(list))
             for grid_distances, grid_xyz_shifts in distance_and_xyz:
-                if any(any(len([distance for distance in current_distance if distance in grid_distance]) >= 11 for grid_distance in grid_distances.values()) for current_distance in current_distances.values()):
+                if any(any(len([dst for dst in cur_dst if dst in grd_dst]) >= 11 for grd_dst in grid_distances.values()) for cur_dst in current_distances.values()):
                     success, temp_grid = turn_current_and_append_to_grid(current)
                     if success:
                         mapped.append(key)
